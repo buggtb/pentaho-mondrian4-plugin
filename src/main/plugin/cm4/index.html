@@ -1,0 +1,75 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Community Mondrian 4 <small>by Meteorite.bi</small></h1>
+
+    <h3 id="detectedversion"></h3>
+    <form class="form-inline">
+        <label>To override this please select your required version:
+        <select class="form-control" id="changeversion">
+            <option value="CE">Pentaho CE</option>
+            <option value="EE">Pentaho EE</option>
+        </select></label>
+    </form>
+    <a id="installibs" class="btn btn-default" href="#">Install Libs</a>
+    <div id="message"></div>
+    <br>
+    <div id="intro"><p>Thanks for installing Community Mondrian 4, as we like Mondrian 4 and want to allow people to
+        use it with minimal effort, especially in Saiku as well add more cool stuff, we wanted to make sure the BI
+        Server users didn't miss out, and as such we wrote this plugin.</p>
+        <p>This plugin will write files to your pentaho-solution directory, specifically the OSGI sub
+            system. It will backup changes to <code>pentaho-solution/system/cm4/backup.zip</code>, but please proceed
+            with caution if using this on a production environment.</p></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var version = "";
+        $.get("/pentaho/plugin/cm4/api/endpoints/version", function (resp) {
+                    version = resp.version;
+                    $('#detectedversion').html("We detected Pentaho " + version);
+                }
+        );
+        var exists = "";
+        $.get("/pentaho/plugin/cm4/api/endpoints/exists", function (resp) {
+                    exists = resp.version;
+                    if(resp.version.indexOf("0.1")>-1){
+                        $('#installibs').addClass('disabled');
+                        $('#message').html("Installation already detected, to allow reinstallation remove the <code>.installedversion</code> file from <code>pentaho-solutions/system/cm4/</code>")
+                    }
+                }
+        );
+        $('#installibs').on('click', function () {
+
+            loadlibs(version);
+
+        });
+        function loadlibs(v) {
+            $.post(
+                    "/pentaho/plugin/cm4/api/endpoints?version=" + v,
+                    function (data) {
+                        $('#message').html("Libraries installed, please restart the BI server to make changes take effect");
+                    }
+            );
+        }
+
+        $("#changeversion").change(function () {
+            version = $('#changeversion').find(":selected").val();
+        });
+
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin title="cm4" loader="DEFAULT" name="cm4">
+    <overlays>
+        <overlay id="startup.cm4" resourcebundle="content/cm4/resources/lang/messages">
+            <menubar id="toolsmenu">
+                <menuitem id="cm4" label="Community Mondrian 4"
+                          command="mantleXulHandler.openUrl('Community Mondrian 4','Community Mondrian 4','content/cm4/index.html')"/>
+            </menubar>
+        </overlay>
+    </overlays>
+    <lifecycle-listener class="bi.meteorite.plugin.CM4PluginLifecycleListener"/>
+    <static-paths>
+        <static-path url="/cm4" localFolder="cm4"/>
+        <static-path url="/cm4/css" localFolder="cm4/css"/>
+        <static-path url="/cm4/js" localFolder="cm4/js"/>
+        <static-path url="/cm4/images" localFolder="cm4/images"/>
+    </static-paths>
+    <content-types>
+        <content-type>
+            <title>Community Mondrian 4</title>
+            <description>Community Maintained Mondrian 4 Bundle.</description>
+            <company name="" url="" logo="@PLUGIN_COMPANY_LOGO@"></company>
+        </content-type>
+    </content-types>
+
+    <!-- Menu entry -->
+    <menu-items>
+        <!--<menu-item id="sparkl_main" anchor="tools-submenu" label="Sparkl" command="content/sparkl/" type="MENU_ITEM" how="LAST_CHILD"/>-->
+    </menu-items>
+</plugin>
