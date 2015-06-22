@@ -52,7 +52,12 @@
         );
         $('#installibs').on('click', function () {
 
-            loadlibs(version);
+            if(version ==="CE"){
+                loadlibs(version);
+            }
+            else{
+                alert("Sorry EE not supported currently");
+            }
 
         });
         function loadlibs(v) {

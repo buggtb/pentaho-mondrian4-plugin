@@ -158,6 +158,12 @@ public class App
 
                 /*FileUtils.cleanDirectory(new File(LOCATION.getPath().substring(0, LOCATION.getPath().lastIndexOf("/")
                 ) + "/../../osgi/cache/"));*/
+
+                File f = new File(LOCATION.getPath().substring(0, LOCATION.getPath().lastIndexOf("/")
+                ) + "/../../saiku/lib/olap4j-1.2.0.jar");
+                if(f.exists()) {
+                    FileUtils.forceDelete(f);
+                }
             } else {
                 LOG.info("Extracting EE OSGI Libs");
                 String zippath = LOCATION.getPath().substring(0, LOCATION.getPath().lastIndexOf("/")) + "/."
